@@ -44,7 +44,7 @@ const generateProducts = (total = 12, categoryId = 1) => {
       product_vote: Number(_.random(0, 5, true).toPrecision(2)),
       product_image: faker.image.fashion(512, 512),
       year_of_manufacture: _.random(2019, 2022),
-      created_at: faker.date.recent(10),
+      created_at: new Date(faker.date.recent(10)).getTime(),
       category_id: categoryId,
     };
 
