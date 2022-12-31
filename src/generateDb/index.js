@@ -14,7 +14,7 @@ const db = {
   Generate products
 */
 let productId = 1;
-const generateProducts = (total = 30) => {
+const generateProducts = (total = 30, categoryId = 1) => {
   const products = [];
 
   for (let i = 1; i <= total; i++) {
@@ -24,7 +24,10 @@ const generateProducts = (total = 30) => {
       product_descriptions: faker.commerce.productDescription(),
       product_tab: [],
       product_price: Number(faker.commerce.price()),
-      product_vote: _.random(0.0, 5.0),
+      product_vote: Number(_.random(0, 5, true).toPrecision(2)),
+      product_image: faker.image.fashion(512, 512),
+      created_at: faker.date.recent(10),
+      category_id: categoryId,
     };
 
     products.push(productItem);
@@ -34,7 +37,7 @@ const generateProducts = (total = 30) => {
   return products;
 };
 
-db.products = generateProducts(30);
+db.products = generateProducts(15).concat(generateProducts(15, 2));
 
 try {
   const writeFilePath = path.resolve(__dirname, '../../db/db.json');
