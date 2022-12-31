@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/main.js",
     "dev": "nodemon ./src/main.js",
-    "generate": "node ./src/generateDb.js"
+    "generate": "node ./src/generateDb/index.js && prettier --write ./db/db.json"
   },
   "keywords": [],
   "author": "",

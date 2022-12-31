@@ -2,7 +2,8 @@ const path = require('path');
 
 const jsonServer = require('json-server');
 const server = jsonServer.create();
-const router = jsonServer.router(path.dirname('../db/db.json'));
+const dbFilePath = path.resolve(__dirname, '../db/db.json');
+const router = jsonServer.router(dbFilePath);
 const middlewares = jsonServer.defaults();
 
 // Set default middlewares (logger, static, cors and no-cache)
@@ -25,7 +26,8 @@ server.use((req, res, next) => {
 });
 
 // Use default router
+const HOST_PORT = 9050;
 server.use(router);
-server.listen(9050, () => {
-  console.log('JSON Server is running');
+server.listen(HOST_PORT, () => {
+  console.log(`JSON Server is running at: http://localhost:${HOST_PORT}`);
 });
