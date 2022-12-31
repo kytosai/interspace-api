@@ -29,10 +29,14 @@ const db = {
   Generate products
 */
 let productId = 1;
+let manufacture = new Set();
 const generateProducts = (total = 12, categoryId = 1) => {
   const products = [];
 
   for (let i = 1; i <= total; i++) {
+    const yearOfManuacturing = _.random(2009, 2022);
+    manufacture.add(yearOfManuacturing);
+
     const productItem = {
       id: productId,
       product_name: faker.commerce.productName(),
@@ -43,7 +47,7 @@ const generateProducts = (total = 12, categoryId = 1) => {
       product_price: Number(faker.commerce.price()),
       product_vote: Number(_.random(0, 5, true).toPrecision(2)),
       product_image: faker.image.fashion(512, 512),
-      year_of_manufacture: _.random(2019, 2022),
+      year_of_manufacture: yearOfManuacturing,
       created_at: new Date(faker.date.recent(10)).getTime(),
       category_id: categoryId,
     };
@@ -113,7 +117,10 @@ const generateCategories = (total = 30, parentId = 0) => {
         randNumberChildTotalCate = 6;
       }
 
-      const childCategoriesLv3 = generateCategories(randNumberChildTotalCate, childCategoriesLv2[j].id);
+      const childCategoriesLv3 = generateCategories(
+        randNumberChildTotalCate,
+        childCategoriesLv2[j].id,
+      );
 
       dbStickyCategories = dbStickyCategories.concat(childCategoriesLv3);
 
@@ -125,7 +132,9 @@ const generateCategories = (total = 30, parentId = 0) => {
           randomProduct = _.random(10, 30);
         }
 
-        dbProducts = dbProducts.concat(generateProducts(randomProduct, childCategoriesLv3[k].id));
+        dbProducts = dbProducts.concat(
+          generateProducts(randomProduct, childCategoriesLv3[k].id),
+        );
       }
 
       childCategoriesLv2[j].childrens = childCategoriesLv3;
@@ -143,7 +152,55 @@ const generateCategories = (total = 30, parentId = 0) => {
 /*
   Generate filters
 */
-const filters = [];
+(() => {
+  const dbFilters = [];
+
+  dbFilters.push({
+    key: 'brand',
+    name: 'Brand',
+    list: [
+      {
+        key: 'samsung',
+        name: 'Samsung',
+      },
+      {
+        key: 'apple',
+        name: 'Apple',
+      },
+      {
+        key: 'sony',
+        name: 'Sony',
+      },
+      {
+        key: 'sony',
+        name: 'Sony',
+      },
+    ],
+  });
+
+  dbFilters.push({
+    key: 'year_of_manufacture',
+    name: 'Year of manufacture',
+    list: (() => {
+      let list = [];
+
+      for (item of manufacture) {
+        list.push({
+          key: item + '',
+          name: item + '',
+        });
+      }
+
+      list = list.sort((item1, item2) => {
+        return Number(item1.name) - Number(item2.name);
+      });
+
+      return list;
+    })(),
+  });
+
+  db.filters = dbFilters;
+})();
 
 /*
   Generate departments
