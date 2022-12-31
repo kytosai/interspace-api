@@ -18,9 +18,9 @@ const BASE_URL = (() => {
 })();
 
 const db = {
+  products: [],
   categories: [], // sticky category
   departments: [],
-  products: [],
   filters: [],
 };
 
@@ -59,7 +59,7 @@ const generateCategories = (total = 30, parentId = 0) => {
   return categories;
 };
 
-const categories = generateCategories(20);
+const categories = generateCategories(10);
 db.categories = categories;
 
 /*
@@ -83,10 +83,13 @@ const generateProducts = (total = 30, categoryId = 1) => {
       id: productId,
       product_name: faker.commerce.productName(),
       product_descriptions: faker.commerce.productDescription(),
-      product_tag: [],
+      product_tag: Array.from(new Array(_.random(0, 3))).map(() => {
+        return faker.commerce.department();
+      }),
       product_price: Number(faker.commerce.price()),
       product_vote: Number(_.random(0, 5, true).toPrecision(2)),
       product_image: faker.image.fashion(512, 512),
+      year_of_manufacture: _.random(2019, 2022),
       created_at: faker.date.recent(10),
       category_id: categoryId,
     };
