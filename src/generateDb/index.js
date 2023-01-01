@@ -205,9 +205,33 @@ const generateCategories = (total = 30, parentId = 0) => {
 /*
   Generate departments
 */
-const departments = generateCategories(8);
+let departmentId = 1;
+const generateDepartments = (total = 30, parentId = 0) => {
+  const departments = [];
+
+  for (let i = 1; i <= total; i++) {
+    const departmentName = faker.commerce.department();
+
+    const category = {
+      id: categoryId,
+      department_name: departmentName,
+      department_slug: slugify(departmentName, { lower: true }),
+      department_description: faker.lorem.lines(1),
+      icon_url: generateStaticCategoryIconUrl(),
+      parent_id: parentId,
+      childrens: [],
+    };
+
+    departments.push(category);
+    departmentId++;
+  }
+
+  return departments;
+};
+
+const departments = generateDepartments(8);
 for (let i = 0; i < departments.length; i++) {
-  departments[i].childrens = generateCategories(_.random(4, 10), departments[i].id);
+  departments[i].childrens = generateDepartments(_.random(4, 10), departments[i].id);
 }
 db.departments = departments;
 
