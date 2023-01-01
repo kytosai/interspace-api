@@ -23,6 +23,7 @@ const db = {
   departments: [],
   filters: [],
   products: [],
+  keywords: [],
 };
 
 /*
@@ -234,6 +235,30 @@ for (let i = 0; i < departments.length; i++) {
   departments[i].childrens = generateDepartments(_.random(4, 10), departments[i].id);
 }
 db.departments = departments;
+
+/*
+  Generate keywords
+*/
+(() => {
+  const dbKeywords = [];
+
+  for (let i = 1; i <= 200; i++) {
+    const random = _.random(1, 4);
+    const keyword = (() => {
+      if (random === 1) {
+        return faker.commerce.department();
+      }
+      
+      return faker.commerce.productName();
+    })();
+
+    dbKeywords.push({
+      keyword,
+    });
+  }
+
+  db.keywords = dbKeywords;
+})();
 
 try {
   const writeFilePath = path.resolve(__dirname, '../../db/db.json');
