@@ -29,7 +29,7 @@ const db = {
 
 const generateStaticProductImageUrl = () => {
   const randNumber = _.random(1, 17);
-  return `${BASE_URL}/images/products/p-${randNumber}.svg`;
+  return `${BASE_URL}/images/products/p-${randNumber}.jgp`;
 };
 
 /*
