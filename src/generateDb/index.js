@@ -18,13 +18,18 @@ const BASE_URL = (() => {
 })();
 
 const db = {
+  products: [],
   categories: [],
   categories_tree: [],
   sticky_categories: [], // sticky category
   departments: [],
   filters: [],
-  products: [],
   keywords: [],
+};
+
+const generateStaticProductImageUrl = () => {
+  const randNumber = _.random(1, 17);
+  return `${BASE_URL}/images/products/p-${randNumber}.svg`;
 };
 
 /*
@@ -39,19 +44,20 @@ const generateProducts = (total = 12, categoryId = 1) => {
     const yearOfManuacturing = _.random(2009, 2022);
     manufacture.add(yearOfManuacturing);
 
-    const productName = faker.commerce.productName();
+    const productName =
+      faker.commerce.productName() + ' ' + faker.lorem.words(_.random(2, 8));
 
     const productItem = {
       id: productId,
       product_name: productName,
       product_slug: slugify(productName, { lower: true }),
-      product_descriptions: faker.commerce.productDescription(),
+      product_descriptions: faker.lorem.words(_.random(2, 14)),
       product_tag: Array.from(new Array(_.random(0, 3))).map(() => {
         return faker.commerce.department();
       }),
-      product_price: Number(faker.commerce.price()),
+      product_price: Number(_.random(10, 120, true).toPrecision(2)),
       product_vote: Number(_.random(0, 5, true).toPrecision(2)),
-      product_image: faker.image.fashion(512, 512),
+      product_image: generateStaticProductImageUrl(),
       year_of_manufacture: yearOfManuacturing,
       created_at: new Date(faker.date.recent(10)).getTime(),
       category_id: categoryId,
