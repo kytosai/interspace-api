@@ -51,7 +51,7 @@ const generateProducts = (total = 12, categoryId = 1) => {
       id: productId,
       product_name: productName,
       product_slug: slugify(productName, { lower: true }),
-      product_descriptions: faker.lorem.words(_.random(2, 14)),
+      product_descriptions: _.upperFirst(faker.lorem.words(_.random(2, 14))),
       product_tag: Array.from(new Array(_.random(0, 3))).map(() => {
         return faker.commerce.department();
       }),
