@@ -19,6 +19,7 @@ const BASE_URL = (() => {
 
 const db = {
   categories: [],
+  categories_tree: [],
   sticky_categories: [], // sticky category
   departments: [],
   filters: [],
@@ -72,6 +73,7 @@ const generateStaticCategoryIconUrl = () => {
   Generate category & products
 */
 let categoryId = 1;
+let dbCategories = [];
 const generateCategories = (total = 30, parentId = 0) => {
   const categories = [];
 
@@ -89,6 +91,7 @@ const generateCategories = (total = 30, parentId = 0) => {
     };
 
     categories.push(category);
+    dbCategories.push(category);
     categoryId++;
   }
 
@@ -96,11 +99,11 @@ const generateCategories = (total = 30, parentId = 0) => {
 };
 
 (() => {
-  let dbCategories = generateCategories(12);
+  let dbCategoriesTree = generateCategories(12);
   let dbStickyCategories = [];
   let dbProducts = [];
 
-  for (let i = 0; i < dbCategories.length; i++) {
+  for (let i = 0; i < dbCategoriesTree.length; i++) {
     let randNumberChildTotalCate = _.random(2, 6);
     if (i === 0) {
       randNumberChildTotalCate = 1;
@@ -108,7 +111,7 @@ const generateCategories = (total = 30, parentId = 0) => {
 
     const childCategoriesLv2 = generateCategories(
       randNumberChildTotalCate,
-      dbCategories[i].id,
+      dbCategoriesTree[i].id,
     );
 
     for (let j = 0; j < childCategoriesLv2.length; j++) {
@@ -141,10 +144,10 @@ const generateCategories = (total = 30, parentId = 0) => {
       childCategoriesLv2[j].childrens = childCategoriesLv3;
     }
 
-    dbCategories[i].childrens = childCategoriesLv2;
+    dbCategoriesTree[i].childrens = childCategoriesLv2;
   } // end for
 
-  db.categories = dbCategories;
+  db.categories_tree = dbCategoriesTree;
   db.sticky_categories = dbStickyCategories;
   db.sticky_categories.length = 12;
   db.products = dbProducts;
@@ -214,7 +217,7 @@ const generateDepartments = (total = 30, parentId = 0) => {
     const departmentName = faker.commerce.department();
 
     const category = {
-      id: categoryId,
+      id: departmentId,
       department_name: departmentName,
       department_slug: slugify(departmentName, { lower: true }),
       department_description: faker.lorem.lines(1),
@@ -248,7 +251,7 @@ db.departments = departments;
       if (random === 1) {
         return faker.commerce.department();
       }
-      
+
       return faker.commerce.productName();
     })();
 
@@ -259,6 +262,11 @@ db.departments = departments;
 
   db.keywords = dbKeywords;
 })();
+
+/*
+  Setup all catregories
+*/
+db.categories = dbCategories;
 
 try {
   const writeFilePath = path.resolve(__dirname, '../../db/db.json');
