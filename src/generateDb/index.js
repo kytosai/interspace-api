@@ -55,8 +55,8 @@ const generateProducts = (total = 12, categoryId = 1) => {
       product_tag: Array.from(new Array(_.random(0, 3))).map(() => {
         return faker.commerce.department();
       }),
-      product_price: Number(_.random(10, 120, true).toPrecision(2)),
-      product_vote: Number(_.random(0, 5, true).toPrecision(2)),
+      product_price: Number(_.random(10, 120, true).toFixed(2)),
+      product_vote: Number(_.random(2, 5, true).toFixed(2)),
       product_image: generateStaticProductImageUrl(),
       year_of_manufacture: yearOfManuacturing,
       created_at: new Date(faker.date.recent(10)).getTime(),
