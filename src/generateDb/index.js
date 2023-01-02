@@ -39,9 +39,12 @@ const generateProducts = (total = 12, categoryId = 1) => {
     const yearOfManuacturing = _.random(2009, 2022);
     manufacture.add(yearOfManuacturing);
 
+    const productName = faker.commerce.productName();
+
     const productItem = {
       id: productId,
-      product_name: faker.commerce.productName(),
+      product_name: productName,
+      product_slug: slugify(productName, { lower: true }),
       product_descriptions: faker.commerce.productDescription(),
       product_tag: Array.from(new Array(_.random(0, 3))).map(() => {
         return faker.commerce.department();
