@@ -185,8 +185,12 @@ const generateCategories = (total = 30, parentId = 0) => {
         name: 'Sony',
       },
       {
-        key: 'sony',
-        name: 'Sony',
+        key: 'xiaomi',
+        name: 'Xiaomi',
+      },
+      {
+        key: 'hp',
+        name: 'HP',
       },
     ],
   });
