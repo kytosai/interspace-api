@@ -223,7 +223,7 @@ const generateDepartments = (total = 30, parentId = 0) => {
   const departments = [];
 
   for (let i = 1; i <= total; i++) {
-    const departmentName = faker.commerce.department();
+    const departmentName = faker.lorem.words(_.random(2,6));
 
     const category = {
       id: departmentId,
