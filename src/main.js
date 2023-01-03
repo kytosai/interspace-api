@@ -26,7 +26,7 @@ server.use(async (req, res, next) => {
   /*
     Fake delay api
   */
-  if (req.url.includes('/products')) {
+  if (req.url.includes('/products') || req.url.includes('/departments')) {
     // fake delay
     await new Promise((res) => {
       setTimeout(() => {
