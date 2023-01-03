@@ -29,7 +29,7 @@ const db = {
 
 const generateStaticProductImageUrl = () => {
   const randNumber = _.random(1, 17);
-  return `${BASE_URL}/images/products/p-${randNumber}.jpg`;
+  return `/images/products/p-${randNumber}.jpg`;
 };
 
 /*
@@ -75,7 +75,7 @@ const generateProducts = (total = 12, categoryId = 1) => {
 */
 const generateStaticCategoryIconUrl = () => {
   const randNumber = _.random(1, 12);
-  return `${BASE_URL}/images/icons/cate-${randNumber}.svg`;
+  return `/images/icons/cate-${randNumber}.svg`;
 };
 
 /*
