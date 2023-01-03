@@ -7,7 +7,8 @@
     "start": "node ./src/main.js",
     "dev": "nodemon ./src/main.js",
     "generateDev": "node ./src/generateDb/index.js --APP_ENV=development && prettier --write ./db/db.json",
-    "generateProd": "node ./src/generateDb/index.js --APP_ENV=production && prettier --write ./db/db.json"
+    "generateProd": "node ./src/generateDb/index.js --APP_ENV=production && prettier --write ./db/db.json",
+    "pm2:start": "pm2 startOrRestart pm2.config.js"
   },
   "keywords": [],
   "author": "",
