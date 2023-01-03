@@ -1,5 +1,8 @@
 # Interspace Obs API
 
-## Development
+## Start mock api
 
-- Run `yarn dev` to start development enviroment
+- Clone this repo 
+- Run `yarn` to install package
+- Run `yarn generate` to generate `db.json` 
+- Run `yarn start` to start api at `http://localhost:9050`
