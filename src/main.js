@@ -26,14 +26,14 @@ server.use(async (req, res, next) => {
   /*
     Fake delay api
   */
-  if (req.url.includes('/products') || req.url.includes('/departments')) {
-    // fake delay
-    await new Promise((res) => {
-      setTimeout(() => {
-        res();
-      }, _.random(200, 600));
-    });
-  }
+  // if (req.url.includes('/products') || req.url.includes('/departments')) {
+  //   // fake delay
+  //   await new Promise((res) => {
+  //     setTimeout(() => {
+  //       res();
+  //     }, _.random(200, 600));
+  //   });
+  // }
 
   // Continue to JSON Server router
   next();
